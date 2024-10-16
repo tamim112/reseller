@@ -1,0 +1,70 @@
+{{extend 'layout.html'}}
+
+{{block header}}
+<li class="breadcrumb-item nav-item"><a href="#">Home</a>
+</li>
+<li class="breadcrumb-item nav-itemactive"><span>Users</span>
+</li>
+{{end}}
+
+{{block content}}
+<div class="container-lg px-3">
+    <div class="row">
+      <div class="col-12">
+        <div class="card mb-4">
+          <div class="card-header">            
+            <i class="fa-solid fa-square-plus"></i>         
+            <strong>Create</strong><span class="small ms-1">User</span>
+          </div>
+          <div class="card-body">
+            <form class="row g-3" action="{{=URL("users","submit")}}" method="POST">
+              <div class="row">
+
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Email address</label>
+                    <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Email address</label>
+                    <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Email address</label>
+                    <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Email address</label>
+                    <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Email address</label>
+                    <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com" required>
+                  </div>
+                </div>
+
+              </div>   
+              <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                <button type="button" class="btn btn-primary rounded-pill me-md-2"><span class="fa-solid fa-floppy-disk"></span> Save</button>
+                <button type="button" class="btn btn-secondary rounded-pill"><span class="fa-solid fa-arrow-left"></span> Back</button>
+              </div>
+            </form>  
+
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+{{end}}
+
+{{block script}}
+{{end}}
