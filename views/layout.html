@@ -49,6 +49,38 @@
         
       </div>
       {{include 'footer.html'}}
+
+
+    </div>
+    <div class="modal" id="staticBackdrop" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header border-0">
+            <h5 class="modal-title fs-6">Modal title</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="container">
+              <div class="mb-3 row">
+                <label for="staticEmail" class="col-sm-2 col-form-label">Name</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control form-control-sm" id="staticEmail" value="nameexample">
+                </div>
+              </div>
+              <div class="mb-3 row">
+                <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control form-control-sm" id="staticEmail" value="email@example.com">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
     </div>
     <!-- CoreUI and necessary plugins-->
     <script src="{{=URL('static','node_modules/@coreui/coreui/dist/js/coreui.bundle.min.js')}}"></script>
@@ -66,6 +98,8 @@
     <script src="{{=URL('static','node_modules/@coreui/chartjs/dist/js/coreui-chartjs.js')}}"></script>
     <script src="{{=URL('static','node_modules/@coreui/utils/dist/umd/index.js')}}"></script>
     <script src="{{=URL('static','js/main.js')}}"></script>
+    <script src="{{=URL('static','js/customemode.js')}}"></script>
+
     {{block scripts}}<!-- individual pages can add scripts here -->{{end}}
   </body>
 </html>

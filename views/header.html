@@ -15,16 +15,16 @@
 
       <ul class="header-nav ms-auto">
         <li class="nav-item"><a class="nav-link" href="#">
-            <span class="icon icon-lg">
+            <span class="icon">
               <i class="fa-regular fa-bell"></i>
             </span></a></li>
         <li class="nav-item"><a class="nav-link" href="#">
-            <span class="icon icon-lg">
+            <span class="icon">
               <i class="fa-solid fa-bars-staggered"></i>
             </span></a></li>
         <li class="nav-item">
           <a class="nav-link" href="#">
-            <span class="icon icon-lg">
+            <span class="icon ">
               <i class="fa-regular fa-envelope"></i>
             </span>
           </a>
@@ -36,30 +36,31 @@
         </li>
         <li class="nav-item dropdown">
           <button class="btn btn-link nav-link py-2 px-2 d-flex align-items-center" type="button" aria-expanded="false" data-coreui-toggle="dropdown">
-            <span class="icon icon-lg theme-icon-active">
-              <i class="fa-solid fa-sun"></i>
+            <span class="icon theme-icon-active mb-2">
+              <i class="fa-regular fa-sun"></i>
             </span>
           </button>
           <ul class="dropdown-menu dropdown-menu-end" style="--cui-dropdown-min-width: 8rem;">
             <li>
-              <button class="dropdown-item d-flex align-items-center" type="button" data-coreui-theme-value="light">
-                <svg class="icon icon-lg me-3">
-                  <use xlink:href="{{=URL('static','node_modules/@coreui/icons/sprites/free.svg#cil-sun')}}"></use>
-                </svg>Light
+              <button class="dropdown-item d-flex align-items-center active " type="button" data-coreui-theme-value="light">
+                <span class="icon me-3 mb-2">
+                  <i class=" fa-regular fa-sun"></i>
+                </span>  
+              Light
               </button>
             </li>
             <li>
-              <button class="dropdown-item d-flex align-items-center" type="button" data-coreui-theme-value="dark">
-                <svg class="icon icon-lg me-3">
-                  <use xlink:href="node_modules/@coreui/icons/sprites/free.svg#cil-moon"></use>
-                </svg>Dark
+              <button class="dropdown-item d-flex align-items-center " type="button" data-coreui-theme-value="dark">
+                <span class="icon me-3 mb-2">
+                <i class="fa-regular fa-moon"></i>
+              </span>Dark
               </button>
             </li>
             <li>
-              <button class="dropdown-item d-flex align-items-center active" type="button" data-coreui-theme-value="auto">
-                <svg class="icon icon-lg me-3">
-                  <use xlink:href="{{=URL('static','node_modules/@coreui/icons/sprites/free.svg#cil-contrast')}}"></use>
-                </svg>Auto
+              <button class="dropdown-item d-flex align-items-center " type="button" data-coreui-theme-value="auto">
+                <span class="icon me-3 mb-2">
+                <i class="fa-solid fa-circle-half-stroke"></i>
+              </span>Auto
               </button>
             </li>
           </ul>

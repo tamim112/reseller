@@ -8007,10 +8007,10 @@ textarea.form-control-lg {
   --cui-sidebar-nav-padding-y: 0.5rem;
   --cui-sidebar-nav-title-padding-x: 1rem;
   --cui-sidebar-nav-title-padding-y: 0.75rem;
-  --cui-sidebar-nav-title-margin-top: 1rem;
+  --cui-sidebar-nav-title-margin-top: 0.75rem;
   --cui-sidebar-nav-title-color: var(--cui-tertiary-color);
   --cui-sidebar-nav-link-padding-x: 1rem;
-  --cui-sidebar-nav-link-padding-y: 0.75rem;
+  --cui-sidebar-nav-link-padding-y: 0.5rem;
   --cui-sidebar-nav-link-color: var(--cui-body-color);
   --cui-sidebar-nav-link-bg: transparent;
   --cui-sidebar-nav-link-border-color: transparent;
@@ -8282,7 +8282,7 @@ textarea.form-control-lg {
   }
   .sidebar-narrow-unfoldable:not(:hover) .sidebar-nav, .sidebar-narrow .sidebar-nav {
     --cui-sidebar-nav-link-padding-x: 0.5rem;
-    --cui-sidebar-nav-link-padding-y: 0.75rem;
+    --cui-sidebar-nav-link-padding-y: 0.5rem;
   }
   .sidebar-narrow-unfoldable:not(:hover) .nav-icon, .sidebar-narrow .nav-icon {
     flex: 0 0 calc(var(--cui-sidebar-narrow-width) - var(--cui-sidebar-nav-padding-x) * 2 - var(--cui-sidebar-nav-link-padding-x) * 2);
