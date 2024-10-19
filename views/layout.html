@@ -17,8 +17,8 @@
     <meta name="author" content="Tamim">
     <meta name="keyword" content="Bootstrap,Admin,Template,Open,Source,jQuery,CSS,HTML,RWD,Dashboard">
     <title>Master</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="icon" type="image/png" sizes="32x32" href="{{=URL('static','assets/favicon/favicon-32x32.png')}}">
-    <link rel="manifest" href="assets/favicon/manifest.json">
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="assets/favicon/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
@@ -37,63 +37,74 @@
     <script src="{{=URL('static','js/color-modes.js')}}"></script>
     <link href="{{=URL('static','node_modules/@coreui/chartjs/dist/css/coreui-chartjs.css')}}" rel="stylesheet">
 
+    <!-- toastr -->
+    <link href="{{=URL('static','toastC/toastr.min.css')}}" rel="stylesheet" type="text/css">
+    <!-- toastr -->
+
+    <!-- Datatable -->
+  <link rel="stylesheet" href="{{=URL('static','css/datatable/datatable.css')}}" />
+  <link href="{{=URL('static','css/datatable/buttons.dataTables.css')}}" rel="stylesheet">
+
+  <!-- fixed colmn -->
+  <link href="{{=URL('static','css/datatable/fixedColumns.dataTables.css')}}" rel="stylesheet">
+  <!-- fixed colmn -->
+  <!-- Datatable end-->
+
+  <!-- select 2 -->
+  <link href="{{=URL('static','css/select2.min.css')}}" rel="stylesheet" />
+  <link rel="stylesheet" href="{{=URL('static','css/custom_forms.css')}}" />
+
+  <!-- select 2 -->
+
     <style>
       @media (max-width: 767px) {
-        .dropdown .dropdown-menu {
+        .filterClass .dropdown-menu {
           width: 300px;
         }
       }
       @media (min-width: 992px) {
-        .dropdown .dropdown-menu {
+        .filterClass .dropdown-menu {
           width: 500px;
         }
       }
+      /* Table common design */
+      table tr td,table th td{
+        white-space: nowrap;
+        vertical-align:middle;
+        width:100%;
+      }
+      .dt-buttons{
+        display: none;
+      }
+      tbody tr td.dt-empty {
+          border: none !important;
+      }
+      .min-w-30px{
+        min-width: 30px;
+      }
+      .cell-w-80px{
+        width: 80px !important;
+      }
+      .min-w-120px{
+        min-width: 120px;
+      }
+      /* Table common design */
     </style>
   </head>
   <body>
     {{include 'sidebar.html'}}
     <div class="wrapper d-flex flex-column min-vh-100">
       {{include 'header.html'}}
-      
       <div class="body flex-grow-1">
         {{block content}}
 
         {{end}}
         
       </div>
+      
       {{include 'footer.html'}}
 
 
-    </div>
-    <div class="modal" id="staticBackdrop" tabindex="-1">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header border-0">
-            <h5 class="modal-title fs-6">Modal title</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <div class="container">
-              <div class="mb-3 row">
-                <label for="staticEmail" class="col-sm-2 col-form-label">Name</label>
-                <div class="col-sm-10">
-                  <input type="text" class="form-control form-control-sm" id="staticEmail" value="nameexample">
-                </div>
-              </div>
-              <div class="mb-3 row">
-                <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
-                <div class="col-sm-10">
-                  <input type="text" class="form-control form-control-sm" id="staticEmail" value="email@example.com">
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
-          </div>
-        </div>
-      </div>
     </div>
     <!-- CoreUI and necessary plugins-->
     <script src="{{=URL('static','node_modules/@coreui/coreui/dist/js/coreui.bundle.min.js')}}"></script>
@@ -112,7 +123,88 @@
     <script src="{{=URL('static','node_modules/@coreui/utils/dist/umd/index.js')}}"></script>
     <script src="{{=URL('static','js/main.js')}}"></script>
     <script src="{{=URL('static','js/customemode.js')}}"></script>
+    <script src="{{=URL('static','toastC/toastr.min.js')}}"></script>
+    <script src="{{=URL('static','js/jquery-3.7.1.min.js')}}"></script>
 
-    {{block scripts}}<!-- individual pages can add scripts here -->{{end}}
+
+
+  <!-- selct2 -->
+  <script src="{{=URL('static','js/select2.min.js')}}"></script>
+  <!-- selct2 -->
+    <!-- Datatable -->
+    <script src="{{=URL('static','js/datatable/datatable.js')}}"></script>  
+    
+    <!-- fixed colmn -->
+    <script src="{{=URL('static','js/datatable/dataTables.fixedColumns.js')}}"></script>  
+    <script src="{{=URL('static','js/datatable/fixedColumns.dataTables.js')}}"></script>  
+    <!-- fixed colmn -->  
+    
+    <!-- Export all-->
+    <script src="{{=URL('static','js/datatable/dataTables.buttons.js')}}"></script>    
+    <script src="{{=URL('static','js/datatable/buttons.dataTables.js')}}"></script>  
+    <script src="{{=URL('static','js/datatable/jszip.min.js')}}"></script>  
+    <script src="{{=URL('static','js/datatable/pdfmake.min.js')}}"></script>  
+    <script src="{{=URL('static','js/datatable/vfs_fonts.js')}}"></script>  
+    <script src="{{=URL('static','js/datatable/buttons.html5.min.js')}}"></script>  
+    <script src="{{=URL('static','js/datatable/buttons.print.min.js')}}"></script>
+    <script src="{{=URL('static','toastC/toastr.min.js')}}"></script>
+    <!-- Export all-->
+  <!-- Datatable -->
+
+  <script>
+    // select2 start
+  $('.select_custom').select2({
+      // dropdownParent: $("#custom_form"),
+      placeholder: "Select an option",
+      allowClear:true,
+  });
+  // select2 end
+
+  
+$(document).ready(function() {
+
+  // Export datatable
+  $("#ExportCopy").on("click", function() {
+    $('.dt-buttons .buttons-copy' ).click();
+  });
+  $("#ExportCSV").on("click", function() {
+    $('.dt-buttons .buttons-csv' ).click();
+  });
+  $("#ExportExcel").on("click", function() {
+    $('.dt-buttons .buttons-excel' ).click();
+  });
+  $("#ExportPDF").on("click", function() {
+    $('.dt-buttons .buttons-pdf' ).click();
+  });
+  $("#ExportPrint").on("click", function() {
+    $('.dt-buttons .buttons-print' ).click();
+  });
+
+});
+</script>
+
+    {{block script}}<!-- individual pages can add scripts here -->{{end}}
+
+      <!-- Flash Message -->
+      {{if response.flash != '' and isinstance(response.flash, dict):}}
+        {{if response.flash['msg_type'] == 'success' :}}
+        <script>
+          toastr.success("{{=XML(response.flash['msg'])}}");
+        </script>
+        {{elif response.flash['msg_type'] == 'error' :}}
+        <script>
+          toastr.error("{{=XML(response.flash['msg'])}}");
+        </script>
+        {{elif response.flash['msg_type'] == 'warning' :}}
+        <script>
+          toastr.warning("{{=XML(response.flash['msg'])}}");
+        </script>
+        {{elif response.flash['msg_type'] == 'info' :}}
+        <script>
+          toastr.info("{{=XML(response.flash['msg'])}}");
+        </script>
+        {{pass}}
+      {{pass}}
+    <!-- Flash Message -->
   </body>
 </html>

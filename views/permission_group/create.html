@@ -16,7 +16,7 @@
             <i class="fa-solid fa-square-plus"></i>         
             <strong>Create</strong><span class="small ms-1">Group</span>
           </div>
-          <div class="card-body">
+          <div class="card-body mt-3">
             <form class="row g-3" action="{{=URL("permission_group","submit")}}" method="POST">
               <div class="row">
 
@@ -39,6 +39,16 @@
                       <input class="form-check-input" type="checkbox" name="status" value="ACTIVE" id="flexSwitchCheckDefaultXl" checked>
                       <label class="form-check-label" for="flexSwitchCheckDefaultXl">ACTIVE</label>
                     </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label for="status" class="form-label">Status</label>
+                    <select class="form-select form-select-sm" name="status" aria-label=".form-select-sm example">
+                      <option selected>Select an option</option>
+                      <option value="ACTIVE">ACTIVE</option>
+                      <option value="INACTIVE">INACTIVE</option>
+                    </select>
                   </div>
                 </div>
 

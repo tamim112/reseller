@@ -25,7 +25,7 @@
             <!-- Buttons Group Aligned to the End -->
             <div class="d-flex align-items-center ms-auto mt-2 mt-md-0">
               <div class="p-1">
-                <div class="dropdown">
+                <div class="dropdown filterClass">
                   <button class="btn btn-sm btn-outline-info me-2 text-nowrap" type="button" data-coreui-toggle="dropdown">
                     <i class="fa-solid fa-filter"></i> <span class="ms-2">Filter</span>
                   </button>
@@ -39,20 +39,25 @@
                             </div>
                         </div>      
                         <form class="px-2 py-2" action="{{=URL('permission_group','index')}}" method="POST">
-                          <div class="p-3 mb-2" style="border: 1px solid 	#b8c2cc; border-radius: 5px ; background-color: rgb( 247, 248, 249);">
+                          <div class="p-3 mb-2 custom_form" style="border: 1px solid 	#b8c2cc; border-radius: 5px ; background-color: rgb( 247, 248, 249);">
                               <div class="row">
                                 <div class="col-md-6">
                                   <div class="mb-3">
-                                    <label for="exampleFormControlInput1" class="form-label">Email address</label>
-                                    <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+                                    <label for="Project" class="form-label">Project</label>
+                                    <input type="text" class="form-control form-control-sm" id="Project" placeholder="project name">
                                   </div>
                                 </div>
                                 <div class="col-md-6">
                                   <div class="mb-3">
-                                    <label for="exampleFormControlInput1" class="form-label">Email address</label>
-                                    <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+                                    <label for="status" class="form-label">Status</label>
+                                    <select class="form-select form-select-sm" name="status" aria-label=".form-select-sm example">
+                                      <option value="">Select an option</option>
+                                      <option value="ACTIVE">ACTIVE</option>
+                                      <option value="INACTIVE">INACTIVE</option>
+                                    </select>
                                   </div>
                                 </div>
+                                
                               </div>
                           </div>  
                             
@@ -60,14 +65,14 @@
                               <div class="col-12">
                                   <div class="d-flex justify-content-start">
                                       <div class="me-2">
-                                          <button type="submit" id="submit" class="btn btn-sm btn-primary">
+                                          <button type="submit" class="btn btn-sm btn-primary">
                                               <i class="fa-solid fa-magnifying-glass"></i> <span class="ms-2">Search</span>
                                           </button>
                                       </div>
                                       <div class="">
-                                          <a href="{{URL('permission_group','index')}}" class="btn btn-sm btn-light">
+                                          <button type="reset" class="btn btn-sm btn-light">
                                               <i class="fa-solid fa-retweet"></i> <span class="ms-2">Reset</span>
-                                          </a>
+                                          </button>
                                       </div>
                                   </div>
                               </div>
@@ -92,7 +97,8 @@
                 </button>
                 <ul class="dropdown-menu">
                   <li><a class="dropdown-item" href="{{=URL('permission_group','create')}}"><i class="fa-solid fa-plus me-3"></i>Add New</a></li>
-                  <li><a class="dropdown-item" href="#"><i class="fa-solid fa-download me-3"></i>Export</a></li>
+                  <li><button class="dropdown-item" id="ExportExcel"><i class="fa-solid fa-download me-3"></i>Export</button></li>
+                  <li><button class="dropdown-item" id="ExportPDF"><i class="fa-solid fa-download me-3"></i>PDF</button></li>
                   <li><a class="dropdown-item" href="#"><i class="fa-solid fa-upload me-3"></i>Import</a></li>
                 </ul>
               </div>
@@ -106,33 +112,11 @@
               <div class="col-md-12">
                 <div class="table-responsive">
 
-                  <table class="table table-sm table-hover table-bordered">
-                    <thead>
-                      <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">First</th>
-                        <th scope="col">Last</th>
-                        <th scope="col">Handle</th>
-                      </tr>
+                  <table class="table compact table-hover table-bordered" id="basic_datatable">
+                    <thead class="text-nowrap">
                     </thead>
                     <tbody>
-                      <tr>
-                        <th scope="row">1</th>
-                        <td>MarkMarkMarkMarkMarkMarkMark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@fat</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">3</th>
-                        <td colspan="2">Larry the Bird</td>
-                        <td>@twitter</td>
-                      </tr>
+                      
                     </tbody>
                   </table>
                 </div>
@@ -147,5 +131,93 @@
 {{end}}
 
 {{block script}}
+<script>
+  console.log($("select[name='status']").val())
+  var table = $('#basic_datatable').DataTable({
+        dom: "Bfrt<'d-flex justify-content-between'<l><i><p>>",
+            buttons: [
+        {
+            extend: 'excel',
+            filename: 'group',
+        },
+        {
+            extend: 'pdf',
+            filename: 'group',
+        }],
+        order: [0, 'asc'],
+        searching:false,
+        paging: true,
+        serverSide: true,
+        scrollCollapse: false,
+        // scrollX: true,        
+        lengthMenu: [
+        [15, 50, 100, -1],
+        [15, 50, 100, 'All']
+        ],
+        ajax: {
+        type:'get',
+        async: true,
+        url: '{{=URL("permission_group", "get_data.json")}}',
+        data: function(d) {
+            d.page = d.start / d.length + 1;
+            d.rows_per_page = d.length;
+            d.orderColumn = d.order[0].group_name
+            d.orderDirection = d.order[0].dir
+            d.group_name = $("input[name='group_name']").val()
+            // d.designation_name = $("select[name='designation_name']").val()
+            d.status = $("select[name='status']").val()
+        },
+        dataSrc: function(json) {
+            return json.data;
+        }
+    },
+
+    columns: [
+    {
+      title: '#', 
+      data: null, 
+      class: 'cell-w-80px text-center', 
+      orderable: false,
+      render: function (data, type, row, meta) {
+          return meta.row + meta.settings._iDisplayStart + 1; 
+      },
+      },
+      {
+        title:'Project Name',
+        data: 'project',
+        class:'min-w-30px'
+      },
+      {
+        title:'Group Name',
+        data: 'group_name',
+        class:'min-w-120px'
+      },
+        
+      {
+        title:'Status',
+        data: 'status',
+        class:'min-w-120px text-center',
+        render: function(data, type, row){
+          return `<div class='badge ${data=="ACTIVE"? 'badge badge-sm  text-bg-primary' : 'badge text-bg-danger'} fw-bold'>${data}</div>`
+        }
+      },
+        
+        {
+          title:'Action',
+          data: 'id',
+          class: 'min-w-120px text-center',
+          render: function(data, type, row){
+            return `
+              <div class="d-flex justify-content-center">                        
+                  <a href="{{=URL("permission_group", "edit")}}/` + row.id + `" class="btn btn-sm">
+                      <i class="fa-solid fa-pen-to-square"></i>
+                  </a>                        
+              </div>
+            ` 
+          }
+        }
+    ],
+    });
+</script>
 
 {{end}}
