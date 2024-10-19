@@ -1,0 +1,61 @@
+{{extend 'layout.html'}}
+
+{{block header}}
+<li class="breadcrumb-item nav-item"><a href="#">Home</a>
+</li>
+<li class="breadcrumb-item nav-itemactive"><span>Permission Group</span>
+</li>
+{{end}}
+
+{{block content}}
+<div class="container-lg px-3">
+    <div class="row">
+      <div class="col-12">
+        <div class="card mb-4">
+          <div class="card-header">            
+            <i class="fa-solid fa-square-plus"></i>         
+            <strong>Create</strong><span class="small ms-1">Group</span>
+          </div>
+          <div class="card-body">
+            <form class="row g-3" action="{{=URL("permission_group","submit")}}" method="POST">
+              <div class="row">
+
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label for="project" class="form-label">Project Name</label>
+                    <input type="text" name="project" class="form-control" id="project" placeholder="Project Name">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label for="group_name" class="form-label">Group Name</label>
+                    <input type="text" name="group_name" class="form-control" id="group_name" placeholder="Group Name">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label for="status" class="form-label">Status</label>
+                    <div class="form-check form-switch form-switch-xl">
+                      <input class="form-check-input" type="checkbox" name="status" value="ACTIVE" id="flexSwitchCheckDefaultXl" checked>
+                      <label class="form-check-label" for="flexSwitchCheckDefaultXl">ACTIVE</label>
+                    </div>
+                  </div>
+                </div>
+
+              </div>   
+              <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                <button type="submit"  class="btn btn-primary me-md-2"><span class="fa-solid fa-floppy-disk"></span> Save</button>
+                <a type="button" href="{{=URL('permission_group','index')}}" class="btn btn-secondary"><span class="fa-solid fa-arrow-left"></span> Back</a>
+              </div>
+            </form>  
+
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+{{end}}
+
+{{block script}}
+{{end}}

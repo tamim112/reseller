@@ -1,155 +1,129 @@
 # -*- coding: utf-8 -*-
 
-# -------------------------------------------------------------------------
-# AppConfig configuration made easy. Look inside private/appconfig.ini
-# Auth is for authenticaiton and access control
-# -------------------------------------------------------------------------
-from gluon.contrib.appconfig import AppConfig
-from gluon.tools import Auth
+#########################################################################
 
-# -------------------------------------------------------------------------
-# This scaffolding model makes your app work on Google App Engine too
-# File is released under public domain and you can use without limitations
-# -------------------------------------------------------------------------
+from gluon.tools import *
 
-if request.global_settings.web2py_version < "2.15.5":
-    raise HTTP(500, "Requires web2py 2.15.5 or newer")
+mail = Mail()  # mailer
+auth = Auth(globals(), db)  # authentication/authorization
+crud = Crud(globals(), db)  # for CRUD helpers using auth
+service = Service(globals())  # for json, xml, jsonrpc, xmlrpc, amfrpc
+plugins = PluginManager()
 
-# -------------------------------------------------------------------------
-# if SSL/HTTPS is properly configured and you want all HTTP requests to
-# be redirected to HTTPS, uncomment the line below:
-# -------------------------------------------------------------------------
-# request.requires_https()
+mail.settings.server = "logging" or "smtp.gmail.com:587"  # your SMTP server
+mail.settings.sender = "you@gmail.com"  # your email
+mail.settings.login = "username:password"  # your credentials or None
 
-# -------------------------------------------------------------------------
-# once in production, remove reload=True to gain full speed
-# -------------------------------------------------------------------------
-configuration = AppConfig(reload=True)
-
-if not request.env.web2py_runtime_gae:
-    # ---------------------------------------------------------------------
-    # if NOT running on Google App Engine use SQLite or other DB
-    # ---------------------------------------------------------------------
-    db = DAL(configuration.get('db.uri'),
-             pool_size=configuration.get('db.pool_size'),
-             migrate_enabled=configuration.get('db.migrate'),
-             check_reserved=['all'])
-else:
-    # ---------------------------------------------------------------------
-    # connect to Google BigTable (optional 'google:datastore://namespace')
-    # ---------------------------------------------------------------------
-    db = DAL('google:datastore+ndb')
-    # ---------------------------------------------------------------------
-    # store sessions and tickets there
-    # ---------------------------------------------------------------------
-    session.connect(request, response, db=db)
-    # ---------------------------------------------------------------------
-    # or store session in Memcache, Redis, etc.
-    # from gluon.contrib.memdb import MEMDB
-    # from google.appengine.api.memcache import Client
-    # session.connect(request, response, db = MEMDB(Client()))
-    # ---------------------------------------------------------------------
-
-# -------------------------------------------------------------------------
-# by default give a view/generic.extension to all actions from localhost
-# none otherwise. a pattern can be 'controller/function.extension'
-# -------------------------------------------------------------------------
-response.generic_patterns = [] 
-if request.is_local and not configuration.get('app.production'):
-    response.generic_patterns.append('*')
-
-# -------------------------------------------------------------------------
-# choose a style for forms
-# -------------------------------------------------------------------------
-response.formstyle = 'bootstrap4_inline'
-response.form_label_separator = ''
-
-# -------------------------------------------------------------------------
-# (optional) optimize handling of static files
-# -------------------------------------------------------------------------
-# response.optimize_css = 'concat,minify,inline'
-# response.optimize_js = 'concat,minify,inline'
-
-# -------------------------------------------------------------------------
-# (optional) static assets folder versioning
-# -------------------------------------------------------------------------
-# response.static_version = '0.0.0'
-
-# -------------------------------------------------------------------------
-# Here is sample code if you need for
-# - email capabilities
-# - authentication (registration, login, logout, ... )
-# - authorization (role based authorization)
-# - services (xml, csv, json, xmlrpc, jsonrpc, amf, rss)
-# - old style crud actions
-# (more options discussed in gluon/tools.py)
-# -------------------------------------------------------------------------
-
-# host names must be a list of allowed host names (glob syntax allowed)
-auth = Auth(db, host_names=configuration.get('host.names'))
-
-# -------------------------------------------------------------------------
-# create all tables needed by auth, maybe add a list of extra fields
-# -------------------------------------------------------------------------
-auth.settings.extra_fields['auth_user'] = []
-auth.define_tables(username=False, signature=False)
-
-# -------------------------------------------------------------------------
-# configure email
-# -------------------------------------------------------------------------
-mail = auth.settings.mailer
-mail.settings.server = 'logging' if request.is_local else configuration.get('smtp.server')
-mail.settings.sender = configuration.get('smtp.sender')
-mail.settings.login = configuration.get('smtp.login')
-mail.settings.tls = configuration.get('smtp.tls') or False
-mail.settings.ssl = configuration.get('smtp.ssl') or False
-
-# -------------------------------------------------------------------------
-# configure auth policy
-# -------------------------------------------------------------------------
+auth.settings.hmac_key = (
+    "sha512:d6160708-08e3-4217-bd9e-e9a550109a8d"  # before define_tables()
+)
+# auth.define_tables()                           # creates all needed tables
+auth.settings.mailer = mail  # for user email verification
 auth.settings.registration_requires_verification = False
 auth.settings.registration_requires_approval = False
+auth.messages.verify_email = (
+    "Click on the link http://"
+    + request.env.http_host
+    + URL("default", "user", args=["verify_email"])
+    + "/%(key)s to verify your email"
+)
 auth.settings.reset_password_requires_verification = True
+auth.messages.reset_password = (
+    "Click on the link http://"
+    + request.env.http_host
+    + URL("default", "user", args=["reset_password"])
+    + "/%(key)s to reset your password"
+)
 
-# -------------------------------------------------------------------------  
-# read more at http://dev.w3.org/html5/markup/meta.name.html               
-# -------------------------------------------------------------------------
-response.meta.author = configuration.get('app.author')
-response.meta.description = configuration.get('app.description')
-response.meta.keywords = configuration.get('app.keywords')
-response.meta.generator = configuration.get('app.generator')
-response.show_toolbar = configuration.get('app.toolbar')
+#########################################################################
 
-# -------------------------------------------------------------------------
-# your http://google.com/analytics id                                      
-# -------------------------------------------------------------------------
-response.google_analytics_id = configuration.get('google.analytics_id')
+crud.settings.auth = None  # =auth to enforce authorization on crud
 
-# -------------------------------------------------------------------------
-# maybe use the scheduler
-# -------------------------------------------------------------------------
-if configuration.get('scheduler.enabled'):
-    from gluon.scheduler import Scheduler
-    scheduler = Scheduler(db, heartbeat=configuration.get('scheduler.heartbeat'))
+#########################################################################
+# Common Variable
+# mreporting_http_pass='abC321'
+# ' " / \ < > ( ) [ ] { } ,
 
-# -------------------------------------------------------------------------
-# Define your tables below (or better in another model file) for example
-#
-# >>> db.define_table('mytable', Field('myfield', 'string'))
-#
-# Fields can be 'string','text','password','integer','double','boolean'
-#       'date','time','datetime','blob','upload', 'reference TABLENAME'
-# There is an implicit 'id integer autoincrement' field
-# Consult manual for more options, validators, etc.
-#
-# More API examples for controllers:
-#
-# >>> db.mytable.insert(myfield='value')
-# >>> rows = db(db.mytable.myfield == 'value').select(db.mytable.ALL)
-# >>> for row in rows: print row.id, row.myfield
-# -------------------------------------------------------------------------
+# ======================date========================
+import datetime
+import os
 
-# -------------------------------------------------------------------------
-# after defining tables, uncomment below to enable auditing
-# -------------------------------------------------------------------------
-# auth.enable_record_versioning(db)
+datetime_fixed = str(date_fixed)[0:19]  # default datetime 2012-07-01 11:48:10
+current_date = str(date_fixed)[0:10]  # default date 2012-07-01
+
+first_currentDate = datetime.datetime.strptime(
+    str(current_date)[0:7] + "-01", "%Y-%m-%d"
+)
+# ================Master_Database===================
+# --------------------------- signature
+signature = db.Table(db,
+    "signature",
+    Field("field1", "string", default=""),
+    Field("field2", "integer", default=0),
+    Field("note", "string", default=""),
+    Field("created_on", "datetime", default=date_fixed),
+    Field("created_by", default=session.user_id),
+    Field("updated_on", "datetime", update=date_fixed),
+    Field("updated_by", update=session.user_id),
+)
+cid="RMS"
+#============Main Table Start==================
+
+# *********************************User Management***********************************************
+# ---------------------------permission_groups Table-------------------------------------
+db.define_table("permission_groups",
+    Field("cid", "string",length=10,default=cid),
+    Field("project","string",length=100),
+    Field("group_name","string",length=100),
+    Field("status", "string",length=10, requires=IS_IN_SET(("ACTIVE", "INACTIVE")), default="ACTIVE"),
+    migrate=True
+)
+# ---------------------------permission_groups Table-------------------------------------
+
+# ---------------------------permissions Table-------------------------------------
+db.define_table("permissions",
+    Field("cid", "string",length=10,default=cid),
+    Field("group_id","integer"),
+    Field("permission","string",length=200),
+    Field("status", "string",length=10, requires=IS_IN_SET(("ACTIVE", "INACTIVE")), default="ACTIVE"),
+    migrate=True
+)
+# ---------------------------permissions Table-------------------------------------
+
+# ---------------------------role_has_permissions Table-------------------------------------
+db.define_table("role_has_permissions",
+    Field("cid", "string",length=10,default=cid),
+    Field("group_id","integer"),
+    Field("permission_id","string",length=200),
+    Field("role","string",length=200),
+    Field("status", "string",length=10, requires=IS_IN_SET(("ACTIVE", "INACTIVE")), default="ACTIVE"),
+    migrate=True
+)
+# ---------------------------role_has_permissions Table-------------------------------------
+
+# ---------------------------users Table-------------------------------------
+db.define_table("users",
+    Field("cid", "string",length=10,default=cid),
+    Field("username","string",length=100),
+    Field("email","string",length=100),
+    Field("mobile","string",length=15),
+    Field("password","string",length=15),
+    Field("password_expire_date","date"),
+    Field("pin_status","string",length=10,requires=IS_IN_SET(("YES", "NO")), default="NO"),
+    Field("pin","string",length=10),
+    
+    Field("first_name","string",length=100),
+    Field("last_name","string",length=100),
+    Field("full_name","string",length=100),
+    
+    Field("address","string",length=100),
+    Field("image","string",length=100),
+    
+    Field("role_id","integer"),
+    Field("role","string",length=200),
+    Field("status", "string",length=10, requires=IS_IN_SET(("ACTIVE", "INACTIVE")), default="ACTIVE"),
+    migrate=True
+)
+# ---------------------------users Table-------------------------------------
+
+# *********************************User Management***********************************************

@@ -1,7 +1,7 @@
 import datetime
 import urllib
-db = DAL('mysql://root:@localhost/ibdgrc', decode_credentials=True)
-date_fixed=datetime.datetime.now()+datetime.timedelta(hours=6)
+db = DAL('mysql://root:@localhost/master', decode_credentials=True)
+date_fixed=datetime.datetime.now()#+datetime.timedelta(hours=6)
 
 #format
 date_format                         = "%Y-%m-%d"

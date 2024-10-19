@@ -53,3 +53,56 @@ CREATE TABLE "auth_cas"(
     "renew" CHAR(1)
 );
 success!
+timestamp: 2024-10-19T12:57:48.641478
+CREATE TABLE `permission_groups`(
+    `id` INT AUTO_INCREMENT NOT NULL,
+    `cid` VARCHAR(10),
+    `project` VARCHAR(100),
+    `group_name` VARCHAR(100),
+    `status` VARCHAR(10),
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2024-10-19T12:57:48.688351
+CREATE TABLE `permissions`(
+    `id` INT AUTO_INCREMENT NOT NULL,
+    `cid` VARCHAR(10),
+    `group_id` INTEGER,
+    `permission` VARCHAR(200),
+    `status` VARCHAR(10),
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2024-10-19T12:57:48.705988
+CREATE TABLE `role_has_permissions`(
+    `id` INT AUTO_INCREMENT NOT NULL,
+    `cid` VARCHAR(10),
+    `group_id` INTEGER,
+    `permission_id` VARCHAR(200),
+    `role` VARCHAR(200),
+    `status` VARCHAR(10),
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2024-10-19T12:57:48.720001
+CREATE TABLE `users`(
+    `id` INT AUTO_INCREMENT NOT NULL,
+    `cid` VARCHAR(10),
+    `username` VARCHAR(100),
+    `email` VARCHAR(100),
+    `mobile` VARCHAR(15),
+    `password` VARCHAR(15),
+    `password_expire_date` DATE,
+    `pin_status` VARCHAR(10),
+    `pin` VARCHAR(10),
+    `first_name` VARCHAR(100),
+    `last_name` VARCHAR(100),
+    `full_name` VARCHAR(100),
+    `address` VARCHAR(100),
+    `image` VARCHAR(100),
+    `role_id` INTEGER,
+    `role` VARCHAR(200),
+    `status` VARCHAR(10),
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!

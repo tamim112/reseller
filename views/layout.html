@@ -36,6 +36,19 @@
     <script src="{{=URL('static','js/config.js')}}"></script>
     <script src="{{=URL('static','js/color-modes.js')}}"></script>
     <link href="{{=URL('static','node_modules/@coreui/chartjs/dist/css/coreui-chartjs.css')}}" rel="stylesheet">
+
+    <style>
+      @media (max-width: 767px) {
+        .dropdown .dropdown-menu {
+          width: 300px;
+        }
+      }
+      @media (min-width: 992px) {
+        .dropdown .dropdown-menu {
+          width: 500px;
+        }
+      }
+    </style>
   </head>
   <body>
     {{include 'sidebar.html'}}

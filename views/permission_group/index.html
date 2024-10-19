@@ -3,13 +3,15 @@
 {{block header}}
 <li class="breadcrumb-item"><a href="#">Home</a>
 </li>
-<li class="breadcrumb-item active"><span>Users</span>
+<li class="breadcrumb-item active"><span>Permission Group</span>
 </li>
 {{end}}
 
 {{block content}}
 <div class="container-lg px-3">
+  
   <div class="row">
+    
     <div class="col-12">
       <div class="card mb-4">
         <div class="card-header">            
@@ -17,7 +19,7 @@
             <div class="d-flex align-items-center">
               <i class="fa-solid fa-list"></i>
               <strong class="ms-2">List</strong>
-              <span class="small ms-1">User</span>
+              <span class="small ms-1">Permission Group</span>
             </div>
         
             <!-- Buttons Group Aligned to the End -->
@@ -36,7 +38,7 @@
                                 <h5 class=""><i class="fa-solid fa-filter"></i> Filter</h1>
                             </div>
                         </div>      
-                        <form class="px-2 py-2" action="{{=URL('users','index')}}" method="POST">
+                        <form class="px-2 py-2" action="{{=URL('permission_group','index')}}" method="POST">
                           <div class="p-3 mb-2" style="border: 1px solid 	#b8c2cc; border-radius: 5px ; background-color: rgb( 247, 248, 249);">
                               <div class="row">
                                 <div class="col-md-6">
@@ -63,7 +65,7 @@
                                           </button>
                                       </div>
                                       <div class="">
-                                          <a href="{{URL('users','index')}}" class="btn btn-sm btn-light">
+                                          <a href="{{URL('permission_group','index')}}" class="btn btn-sm btn-light">
                                               <i class="fa-solid fa-retweet"></i> <span class="ms-2">Reset</span>
                                           </a>
                                       </div>
@@ -79,7 +81,7 @@
                 </div>
               </div>
         
-              <a class="btn btn-primary btn-sm me-2 text-nowrap" type="button" href="{{=URL('users','create')}}">
+              <a class="btn btn-primary btn-sm me-2 text-nowrap" type="button" href="{{=URL('permission_group','create')}}">
                 <i class="fa-solid fa-plus"></i>
                 Add New
               </a>
@@ -89,7 +91,7 @@
                   Action
                 </button>
                 <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#"><i class="fa-solid fa-plus me-3"></i>Add New</a></li>
+                  <li><a class="dropdown-item" href="{{=URL('permission_group','create')}}"><i class="fa-solid fa-plus me-3"></i>Add New</a></li>
                   <li><a class="dropdown-item" href="#"><i class="fa-solid fa-download me-3"></i>Export</a></li>
                   <li><a class="dropdown-item" href="#"><i class="fa-solid fa-upload me-3"></i>Import</a></li>
                 </ul>
