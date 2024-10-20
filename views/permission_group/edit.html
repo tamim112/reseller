@@ -1,22 +1,79 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bootstrap Select Example</title>
-</head>
-<body>
+{{extend 'layout.html'}}
 
-    <div class="container mt-5">
-        <h1>Select Example</h1>
-        <select style="width: 200px; padding: 10px;" aria-label="Default select example">
-            <option selected>Open this select menu</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
-        </select>
+{{block header}}
+<li class="breadcrumb-item nav-item"><a href="#">Home</a>
+</li>
+<li class="breadcrumb-item nav-itemactive"><span>Permission Group</span>
+</li>
+{{end}}
+
+{{block content}}
+<div class="container-lg px-3">
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-4">
+            <div class="card-header">
+                <div class="d-flex flex-wrap justify-content-between align-items-center">
+                    <div class="d-flex align-items-center">        
+                        <i class="fa-solid fa-pen-to-square me-1"></i>        
+                        <strong>Edit</strong><span class="small ms-1">Group</span>
+                    </div>
+                    <div class="d-flex align-items-center ms-auto mt-2 mt-md-0">
+                        <div class="btn-group">
+                            <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-coreui-toggle="dropdown" aria-expanded="false">
+                            Action
+                            </button>
+                            <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{{=URL('permission_group','delete')}}?id={{=group.id}}"><i class="fa-solid fa-trash-can me-3"></i>Delete</a></li>
+                            
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        <div class="card-body mt-3">
+            <form class="row g-3" action="{{=URL("permission_group","update")}}?id={{=group.id}}" method="POST">
+              <div class="row">
+
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label for="project" class="form-label">Project Name</label>
+                    <input type="text" name="project" value="{{=group.project}}" class="form-control" id="project" placeholder="Project Name">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label for="group_name" class="form-label">Group Name</label>
+                    <input type="text" name="group_name" value="{{=group.group_name}}"  class="form-control" id="group_name" placeholder="Group Name">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label for="status" class="form-label">Status</label>
+                    <div class="form-check form-switch form-switch-xl">
+                      <input class="form-check-input" type="checkbox" name="status" value="ACTIVE" id="flexSwitchCheckDefaultXl" {{if str(group.status) == "ACTIVE":}} checked {{pass}}>
+                      <label class="form-check-label" for="flexSwitchCheckDefaultXl">ACTIVE</label>
+                    </div>
+                  </div>
+                </div>
+                
+              </div>   
+              <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                <button type="submit"  class="btn btn-primary me-md-2"><span class="fa-solid fa-floppy-disk"></span> Save</button>
+                <a type="button" href="{{=URL('permission_group','index')}}" class="btn btn-secondary"><span class="fa-solid fa-arrow-left"></span> Back</a>
+              </div>
+            </form>  
+
+          </div>
+        </div>
+      </div>
+      
     </div>
+  </div>
+{{end}}
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+{{block script}}
+<script>
+
+</script>
+{{end}}

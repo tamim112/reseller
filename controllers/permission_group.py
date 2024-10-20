@@ -34,21 +34,58 @@ def submit():
     return locals()
 
 def edit():
-
+    req_id=request.vars.id
+    group = db(db.permission_groups.id == req_id).select().first()
     return locals()
 
 
+def update():
+    
+    errors=[]
+    req_id=request.vars.id
+    group = db(db.permission_groups.id == req_id).select().first()
+    
+    project = request.vars.project
+    group_name = request.vars.group_name
+    status = "ACTIVE" if str(request.vars.status) == "ACTIVE" else "INACTIVE"
+    
+    if not project:
+        errors.append('Project Name is Required.')
+    if not group_name:
+        errors.append('Group Name is Required.')
+        
+    if errors:
+        msg = ''
+        for item in errors:
+            msg = msg + item + ' <br>'
+        session.flash = {"msg_type":"error","msg":msg}
+        redirect (URL('permission_group','edit',vars={"id":req_id}))
+    
+    group.update_record(
+        project=project,
+        group_name=group_name,
+        status=status
+    )
+    session.flash = {"msg_type":"success","msg":"Group successfully Updated!"}
+    redirect(URL("permission_group","index"))
+    return locals()
+
+def delete():
+    req_id=request.vars.id
+    db(db.permission_groups.id == req_id).delete()
+    session.flash = {"msg_type":"error","msg":"Group successfully Deleted!"}
+    redirect(URL("permission_group","index"))
+    return locals()
+
 def get_data():
-    status = request.vars.status
-    print("aaaaaa")
-    print(status)
+    
     #Search Start##
     conditions = ""
     if  request.vars.group_name != None and request.vars.group_name !='':
         group_name = str(request.vars.group_name)
         conditions += " and group_name = '"+group_name+"'"
-    # if  request.vars.designation_name != None and request.vars.designation_name !='':
-    #     conditions += " and id = '"+str(request.vars.designation_name)+"'"
+    if  request.vars.project != None and request.vars.project !='':
+        conditions += " and project = '"+str(request.vars.project)+"'"
     if  request.vars.status != None and request.vars.status != '':
         status = request.vars.status
         print(status)

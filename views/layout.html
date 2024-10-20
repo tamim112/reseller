@@ -29,8 +29,6 @@
     <link href="{{=URL('static','css/style.css')}}" rel="stylesheet">
     <!-- We use those styles to show code examples, you should remove them in your application.-->
     <link href="{{=URL('static','css/examples.css')}}" rel="stylesheet">
-
-
     <link rel="stylesheet" href="{{=URL('static','assets/fontawesome/css/all.min.css')}}"/>
 
     <script src="{{=URL('static','js/config.js')}}"></script>
@@ -53,7 +51,6 @@
   <!-- select 2 -->
   <link href="{{=URL('static','css/select2.min.css')}}" rel="stylesheet" />
   <link rel="stylesheet" href="{{=URL('static','css/custom_forms.css')}}" />
-
   <!-- select 2 -->
 
     <style>
@@ -107,8 +104,11 @@
 
     </div>
     <!-- CoreUI and necessary plugins-->
+    <script src="{{=URL('static','js/jquery-3.7.1.min.js')}}"></script>
+
     <script src="{{=URL('static','node_modules/@coreui/coreui/dist/js/coreui.bundle.min.js')}}"></script>
     <script src="{{=URL('static','node_modules/simplebar/dist/simplebar.min.js')}}"></script>
+
     <script>
       const header = document.querySelector('header.header');      
       document.addEventListener('scroll', () => {
@@ -124,7 +124,6 @@
     <script src="{{=URL('static','js/main.js')}}"></script>
     <script src="{{=URL('static','js/customemode.js')}}"></script>
     <script src="{{=URL('static','toastC/toastr.min.js')}}"></script>
-    <script src="{{=URL('static','js/jquery-3.7.1.min.js')}}"></script>
 
 
 
@@ -152,13 +151,17 @@
   <!-- Datatable -->
 
   <script>
-    // select2 start
-  $('.select_custom').select2({
-      // dropdownParent: $("#custom_form"),
-      placeholder: "Select an option",
-      allowClear:true,
-  });
-  // select2 end
+    $(document).ready(function() {
+        // select2 start
+        $('.select_custom').select2({
+            // dropdownParent: $("#custom_form"),
+            placeholder: "Select an option",
+            allowClear:true,
+        });
+        // select2 end
+
+});
+
 
   
 $(document).ready(function() {

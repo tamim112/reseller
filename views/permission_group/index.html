@@ -44,13 +44,13 @@
                                 <div class="col-md-6">
                                   <div class="mb-3">
                                     <label for="Project" class="form-label">Project</label>
-                                    <input type="text" class="form-control form-control-sm" id="Project" placeholder="project name">
+                                    <input type="text" name="project" value="{{request.vars.project}}" class="form-control form-control-sm" id="Project" placeholder="project name">
                                   </div>
                                 </div>
                                 <div class="col-md-6">
                                   <div class="mb-3">
                                     <label for="status" class="form-label">Status</label>
-                                    <select class="form-select form-select-sm" name="status" aria-label=".form-select-sm example">
+                                    <select class="form-select form-select-sm select_custom" name="status">
                                       <option value="">Select an option</option>
                                       <option value="ACTIVE">ACTIVE</option>
                                       <option value="INACTIVE">INACTIVE</option>
@@ -164,6 +164,7 @@
             d.orderColumn = d.order[0].group_name
             d.orderDirection = d.order[0].dir
             d.group_name = $("input[name='group_name']").val()
+            d.project = $("input[name='project']").val()
             // d.designation_name = $("select[name='designation_name']").val()
             d.status = $("select[name='status']").val()
         },
@@ -209,7 +210,7 @@
           render: function(data, type, row){
             return `
               <div class="d-flex justify-content-center">                        
-                  <a href="{{=URL("permission_group", "edit")}}/` + row.id + `" class="btn btn-sm">
+                  <a href="{{=URL("permission_group", "edit")}}?id=` + row.id + `" class="btn btn-sm">
                       <i class="fa-solid fa-pen-to-square"></i>
                   </a>                        
               </div>
